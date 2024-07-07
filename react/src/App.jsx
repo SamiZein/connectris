@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div>
-      <div className="h-[29.7rem] ml-4 absolute flex items-end space-x-[1.2rem]">
+      <div className="h-[29.7rem] ml-4 absolute flex space-x-[1.2rem]">
         <Column />
         <Column />
         <Column />
