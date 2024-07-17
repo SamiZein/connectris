@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const ROWS = 6;
 const COLS = 7;
@@ -21,14 +21,15 @@ const ConnectFour = () => {
 
     for (let row = ROWS - 1; row >= 0; row--) {
       if (board[row][col] === null) {
-        const newBoard = [...board];
+        const newBoard = board.map((row) => row.slice());
         newBoard[row][col] = currentPlayer;
-        setBoard(newBoard);
-        setIsProcessing(true);
         setTimeout(() => {
-          handleConnectFours(newBoard);
-        }, 300);
+          setBoard(newBoard);
+       }, 100);
+        setIsProcessing(true);
+        handleConnectFours(newBoard);
         setCurrentPlayer(currentPlayer === 'Red' ? 'Yellow' : 'Red');
+        setIsProcessing(false);
         return;
       }
     }
@@ -38,14 +39,16 @@ const ConnectFour = () => {
   const handleConnectFours = (board) => {
     let markedBoard = markAllWins(board);
     if (markedBoard) {
-      setBoard(markedBoard);
       setTimeout(() => {
-        const newBoard = removeMarkedTiles(markedBoard);
-        setBoard(newBoard);
-        handleConnectFours(newBoard);
+          setBoard(markedBoard);
+          setTimeout(() => {
+            const newBoard = removeMarkedTiles(markedBoard);
+            setBoard(newBoard);
+            handleConnectFours(newBoard);
+          }, 500);
       }, 500);
-    } else {
-      setIsProcessing(false);
+      
+      
     }
   };
 
@@ -140,13 +143,14 @@ const ConnectFour = () => {
                 justifyContent: 'center',
               }}
               onClick={() => dropTile(colIndex)}
-            >
-              {cell}
-            </div>
+            />
           ))
         )}
       </div>
-      <button onClick={() => setBoard(createEmptyBoard())}>Reset Game</button>
+      <button onClick={() => {
+        setBoard(createEmptyBoard());
+        setCurrentPlayer('Red');
+      }}>Reset Game</button>
     </div>
   );
 };
