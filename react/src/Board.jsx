@@ -128,20 +128,12 @@ const ConnectFour = () => {
   return (
     <div>
       <h1>Connect Four</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${COLS}, 50px)` }}>
+      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${COLS}, 64px)` }}>
         {board.map((row, rowIndex) =>
           row.map((cell, colIndex) => (
             <div
+              className={`border border-black ${!cell?'bg-white':cell=='Red'?'bg-red-500':'bg-yellow-300'} rounded-full w-16 h-16 items-center`}
               key={`${rowIndex}-${colIndex}`}
-              style={{
-                width: 50,
-                height: 50,
-                backgroundColor: cell ? cell : 'white',
-                border: '1px solid black',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
               onClick={() => dropTile(colIndex)}
             />
           ))
