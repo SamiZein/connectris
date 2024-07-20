@@ -11,6 +11,8 @@ const createEmptyBoard = () => {
   return board;
 };
 
+
+
 const ConnectFour = () => {
   const [board, setBoard] = useState(createEmptyBoard());
   const [currentPlayer, setCurrentPlayer] = useState('Red');
@@ -18,41 +20,59 @@ const ConnectFour = () => {
   const [redScore, setRedScore] = useState(0);
   const [yellowScore, setYellowScore] = useState(0);
 
-
+  const addPoints = (board, markedBoard) => {
+    let redPointsAdded = 0;
+    let yellowPointsAdded = 0;
+    for (let row = 0; row < ROWS; row++) {
+      for (let col = 0; col < COLS; col++) {
+        if (markedBoard[row][col] === null && board[row][col] !== null) {
+          if (board[row][col] === 'Red') {
+            redPointsAdded++;
+          } else{
+            yellowPointsAdded++;
+          }
+        }
+      }
+    }
+    setRedScore(prev => prev + redPointsAdded);
+    setYellowScore(prev => prev + yellowPointsAdded)
+  };
 
   const dropTile = (col) => {
     if (isProcessing) return;
+
+    setIsProcessing(true);
 
     for (let row = ROWS - 1; row >= 0; row--) {
       if (board[row][col] === null) {
         const newBoard = board.map((row) => row.slice());
         newBoard[row][col] = currentPlayer;
+        setBoard(newBoard);
         setTimeout(() => {
-          setBoard(newBoard);
-       }, 100);
-        setIsProcessing(true);
-        handleConnectFours(newBoard);
-        setCurrentPlayer(currentPlayer === 'Red' ? 'Yellow' : 'Red');
-        setIsProcessing(false);
+          handleConnectFours(newBoard);
+        }, 300);
         return;
       }
     }
     alert('Column is full!');
   };
 
+
   const handleConnectFours = (board) => {
     let markedBoard = markAllWins(board);
     if (markedBoard) {
       setTimeout(() => {
-          setBoard(markedBoard);
-          setTimeout(() => {
-            const newBoard = removeMarkedTiles(markedBoard);
-            setBoard(newBoard);
-            handleConnectFours(newBoard);
-          }, 500);
+        addPoints(board, markedBoard);
+        setBoard(markedBoard);
+        setTimeout(() => {
+          const newBoard = removeMarkedTiles(markedBoard);
+          setBoard(newBoard);
+          handleConnectFours(newBoard);
+        }, 500);
       }, 500);
-      
-      
+    } else {
+      setIsProcessing(false);
+      setCurrentPlayer(currentPlayer === 'Red' ? 'Yellow' : 'Red');
     }
   };
 
