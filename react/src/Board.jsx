@@ -15,6 +15,10 @@ const ConnectFour = () => {
   const [board, setBoard] = useState(createEmptyBoard());
   const [currentPlayer, setCurrentPlayer] = useState('Red');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [redScore, setRedScore] = useState(0);
+  const [yellowScore, setYellowScore] = useState(0);
+
+
 
   const dropTile = (col) => {
     if (isProcessing) return;
@@ -128,21 +132,38 @@ const ConnectFour = () => {
   return (
     <div>
       <h1>Connect Four</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${COLS}, 64px)` }}>
-        {board.map((row, rowIndex) =>
-          row.map((cell, colIndex) => (
-            <div
-              className={`border border-black ${!cell?'bg-white':cell=='Red'?'bg-red-500':'bg-yellow-300'} rounded-full w-16 h-16 items-center`}
-              key={`${rowIndex}-${colIndex}`}
-              onClick={() => dropTile(colIndex)}
-            />
-          ))
-        )}
+      <div className="flex">
+        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${COLS}, 64px)` }}>
+          {board.map((row, rowIndex) =>
+            row.map((cell, colIndex) => (
+              <div
+                className={`border border-black ${!cell?'bg-white':cell=='Red'?'bg-red-500':'bg-yellow-300'} rounded-full w-16 h-16 items-center`}
+                key={`${rowIndex}-${colIndex}`}
+                onClick={() => dropTile(colIndex)}
+              />
+            ))
+          )}
+        </div>
+        <button onClick={() => {
+          setBoard(createEmptyBoard());
+          setCurrentPlayer('Red');
+        }}>Reset Game</button>
+        <div>
+          <h2>Score Board</h2>
+          <div className="flex space-x-3">
+            <div className="flex flex-col items-center">
+              <div className={`size-4 rounded-full ${currentPlayer=='Red'?'bg-red-500':'bg-gray-500'}`} />
+              <h3>Red</h3>
+              <h3>{redScore}</h3>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className={`size-4 rounded-full ${currentPlayer=='Yellow'?'bg-yellow-300':'bg-gray-500'}`} />
+              <h3>Yellow</h3>
+              <h3>{yellowScore}</h3>
+            </div>
+          </div>
+        </div>
       </div>
-      <button onClick={() => {
-        setBoard(createEmptyBoard());
-        setCurrentPlayer('Red');
-      }}>Reset Game</button>
     </div>
   );
 };
