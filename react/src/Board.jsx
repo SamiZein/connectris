@@ -150,8 +150,8 @@ const ConnectFour = () => {
   };
 
   return (
-    <div>
-      <h1>Connect Four</h1>
+    <div className="bg-blue-500">
+      <h1 className="text-xl">Connect Four</h1>
       <div className="flex">
         <div style={{ display: 'grid', gridTemplateColumns: `repeat(${COLS}, 64px)` }}>
           {board.map((row, rowIndex) =>
@@ -168,15 +168,15 @@ const ConnectFour = () => {
           setBoard(createEmptyBoard());
           setCurrentPlayer('Red');
         }}>Reset Game</button>
-        <div>
-          <h2>Score Board</h2>
-          <div className="flex space-x-3">
-            <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center">
+          <h2 className="text-lg">Score Board</h2>
+          <div className="flex w-full">
+            <div className="flex flex-col items-center flex-1">
               <div className={`size-4 rounded-full ${currentPlayer=='Red'?'bg-red-500':'bg-gray-500'}`} />
               <h3>Red</h3>
               <h3>{redScore}</h3>
             </div>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center flex-1">
               <div className={`size-4 rounded-full ${currentPlayer=='Yellow'?'bg-yellow-300':'bg-gray-500'}`} />
               <h3>Yellow</h3>
               <h3>{yellowScore}</h3>
