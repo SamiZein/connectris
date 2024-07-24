@@ -13,7 +13,7 @@ const createEmptyBoard = () => {
 
 
 
-const ConnectFour = () => {
+const Board = () => {
   const [board, setBoard] = useState(createEmptyBoard());
   const [currentPlayer, setCurrentPlayer] = useState('Red');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -151,9 +151,12 @@ const ConnectFour = () => {
 
   return (
     <div className="bg-blue-500">
-      <h1 className="text-xl">Connect Four</h1>
+      <h1 className="p-2 text-xl">Connectris</h1>
       <div className="flex">
-        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${COLS}, 64px)` }}>
+        <div 
+          className="m-2"
+          style={{ display: 'grid', gridTemplateColumns: `repeat(${COLS}, 64px)` }}
+        >
           {board.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <div
@@ -164,11 +167,13 @@ const ConnectFour = () => {
             ))
           )}
         </div>
-        <button onClick={() => {
+        <button 
+          className="p-2 bg-gray-300 rounded h-fit"
+          onClick={() => {
           setBoard(createEmptyBoard());
           setCurrentPlayer('Red');
         }}>Reset Game</button>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center p-2 m-2 bg-gray-300 rounded h-fit">
           <h2 className="text-lg">Score Board</h2>
           <div className="flex w-full">
             <div className="flex flex-col items-center flex-1">
@@ -188,4 +193,4 @@ const ConnectFour = () => {
   );
 };
 
-export default ConnectFour;
+export default Board;
