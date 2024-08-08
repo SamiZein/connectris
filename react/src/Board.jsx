@@ -21,25 +21,19 @@ const Board = () => {
   const [redTime, setRedTime] = useState(600);
 
   useEffect(() => {
-    timeDecrease();
-    return () => clearInterval(timeHandler.current);
-  }, []);
-
-  let timeHandler = useRef();
-
-  const timeDecrease = () => {
-    timeHandler.current = setInterval(() => {
+    const interval = setInterval(() => {
       if (redTime == 0 || yellowTime == 0) {
         clearInterval();
         return;
       }
-      if (currentPlayer == "Red" && redTime > 0) {
+      if (currentPlayer === "Red") {
         setRedTime((prev) => prev - 1);
       } else {
         setYellowTime((prev) => prev - 1);
       }
     }, 1000);
-  };
+    return () => clearInterval(interval);
+  }, [redTime, yellowTime]);
 
   const addPoints = (board, markedBoard) => {
     let redPointsAdded = 0;
