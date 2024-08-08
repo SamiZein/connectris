@@ -17,13 +17,14 @@ const Board = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [redScore, setRedScore] = useState(0);
   const [yellowScore, setYellowScore] = useState(0);
-  const [yellowTime, setYellowTime] = useState(600);
-  const [redTime, setRedTime] = useState(600);
+  const [yellowTime, setYellowTime] = useState(60);
+  const [redTime, setRedTime] = useState(60);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (redTime == 0 || yellowTime == 0) {
         clearInterval();
+        setIsProcessing(true);
         return;
       }
       if (currentPlayer === "Red") {
