@@ -184,7 +184,7 @@ const Board = () => {
 
   return (
     <div className="bg-blue-500">
-      <h1 className="p-2 text-xl">Connectris</h1>
+      <h1 className="p-2 text-2xl">Connectris</h1>
       <div className="flex ">
         <div
           className="m-2"
@@ -202,39 +202,42 @@ const Board = () => {
             ))
           )}
         </div>
-        <button
-          className="p-2 bg-gray-300 rounded h-fit"
-          onClick={() => {
-            setBoard(createEmptyBoard());
-            setCurrentPlayer("Red");
-          }}
-        >
-          Reset Game
-        </button>
-        <div className="flex flex-col items-center p-2 m-2 bg-gray-300 rounded h-fit">
-          <h2 className="text-lg">Score Board</h2>
-          <div className="flex w-full">
-            <div className="flex flex-col items-center flex-1">
-              <div
-                className={`size-4 rounded-full ${
-                  currentPlayer == "Red" ? "bg-red-500" : "bg-gray-500"
-                }`}
-              />
-              <h3>Red</h3>
-              <h3>{redScore}</h3>
-              <h3>{formatTime(redTime)}</h3>
-            </div>
-            <div className="flex flex-col items-center flex-1">
-              <div
-                className={`size-4 rounded-full ${
-                  currentPlayer == "Yellow" ? "bg-yellow-300" : "bg-gray-500"
-                }`}
-              />
-              <h3>Yellow</h3>
-              <h3>{yellowScore}</h3>
-              <h3>{formatTime(yellowTime)}</h3>
+
+        <div>
+          <div className="flex flex-col items-center p-2 m-2 bg-gray-300 rounded h-fit">
+            <h2 className="text-lg">Score Board</h2>
+            <div className="flex w-full">
+              <div className="flex flex-col items-center flex-1">
+                <div
+                  className={`size-4 rounded-full ${
+                    currentPlayer == "Red" ? "bg-red-500" : "bg-gray-500"
+                  }`}
+                />
+                <h3>Red</h3>
+                <h3>{redScore}</h3>
+                <h3>{formatTime(redTime)}</h3>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <div
+                  className={`size-4 rounded-full ${
+                    currentPlayer == "Yellow" ? "bg-yellow-300" : "bg-gray-500"
+                  }`}
+                />
+                <h3>Yellow</h3>
+                <h3>{yellowScore}</h3>
+                <h3>{formatTime(yellowTime)}</h3>
+              </div>
             </div>
           </div>
+          <button
+            className="w-full p-2 m-2 bg-gray-300 rounded"
+            onClick={() => {
+              setBoard(createEmptyBoard());
+              setCurrentPlayer("Red");
+            }}
+          >
+            Reset Game
+          </button>
         </div>
       </div>
     </div>
