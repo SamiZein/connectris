@@ -185,45 +185,46 @@ const Board = () => {
   };
 
   return (
-    <div className="bg-blue-500">
+    <div className="w-auto h-auto bg-blue-500">
       <h1 className="p-2 text-2xl">Connectris</h1>
       <div className="flex">
-        {isGameOver && (
-          <div>
-            <h2>{redTime == 0 ? "Yellow Wins" : "Red Wins"}</h2>
-            <button
-              className="w-full p-2 m-2 bg-gray-300 rounded"
-              onClick={() => {
-                setBoard(createEmptyBoard());
-                setCurrentPlayer("Red");
-                setIsGameOver(false);
-                setRedScore(0);
-                setYellowScore(0);
-                setRedTime(60);
-                setYellowTime(60);
-              }}
-            >
-              New Game
-            </button>
-          </div>
-        )}
-        <div
-          className="m-2"
-          style={{ display: "grid", gridTemplateColumns: `repeat(${COLS}, 64px)` }}
-        >
-          {board.map((row, rowIndex) =>
-            row.map((cell, colIndex) => (
-              <div
-                className={`border border-black ${
-                  !cell ? "bg-white" : cell == "Red" ? "bg-red-500" : "bg-yellow-300"
-                } rounded-full w-16 h-16 items-center`}
-                key={`${rowIndex}-${colIndex}`}
-                onClick={() => dropTile(colIndex)}
-              />
-            ))
+        <div className="h-fit w-fit">
+          {isGameOver && (
+            <div className="absolute flex flex-col items-center bg-gray-500 rounded left-60 top-60">
+              <h2>{redTime == 0 ? "Yellow Wins" : "Red Wins"}</h2>
+              <button
+                className="p-2 m-2 bg-gray-300 rounded"
+                onClick={() => {
+                  setBoard(createEmptyBoard());
+                  setCurrentPlayer("Red");
+                  setIsGameOver(false);
+                  setRedScore(0);
+                  setYellowScore(0);
+                  setRedTime(60);
+                  setYellowTime(60);
+                }}
+              >
+                New Game
+              </button>
+            </div>
           )}
+          <div
+            className="m-2"
+            style={{ display: "grid", gridTemplateColumns: `repeat(${COLS}, 64px)` }}
+          >
+            {board.map((row, rowIndex) =>
+              row.map((cell, colIndex) => (
+                <div
+                  className={`border border-black ${
+                    !cell ? "bg-white" : cell == "Red" ? "bg-red-500" : "bg-yellow-300"
+                  } rounded-full w-16 h-16 items-center`}
+                  key={`${rowIndex}-${colIndex}`}
+                  onClick={() => dropTile(colIndex)}
+                />
+              ))
+            )}
+          </div>
         </div>
-
         <div>
           <div className="flex flex-col items-center p-2 m-2 bg-gray-300 rounded h-fit">
             <h2 className="text-lg">Score Board</h2>
