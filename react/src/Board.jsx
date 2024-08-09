@@ -15,6 +15,7 @@ const Board = () => {
   const [board, setBoard] = useState(createEmptyBoard());
   const [currentPlayer, setCurrentPlayer] = useState("Red");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
   const [redScore, setRedScore] = useState(0);
   const [yellowScore, setYellowScore] = useState(0);
   const [yellowTime, setYellowTime] = useState(60);
@@ -24,7 +25,7 @@ const Board = () => {
     const interval = setInterval(() => {
       if (redTime == 0 || yellowTime == 0) {
         clearInterval();
-        setIsProcessing(true);
+        setIsGameOver(true);
         return;
       }
       if (currentPlayer === "Red") {
@@ -55,7 +56,7 @@ const Board = () => {
   };
 
   const dropTile = (col) => {
-    if (isProcessing) return;
+    if (isProcessing || isGameOver) return;
 
     setIsProcessing(true);
 
@@ -71,6 +72,7 @@ const Board = () => {
       }
     }
     alert("Column is full!");
+    setIsProcessing(false);
   };
 
   const handleConnectFours = (board) => {
@@ -185,7 +187,26 @@ const Board = () => {
   return (
     <div className="bg-blue-500">
       <h1 className="p-2 text-2xl">Connectris</h1>
-      <div className="flex ">
+      <div className="flex">
+        {isGameOver && (
+          <div>
+            <h2>{redTime == 0 ? "Yellow Wins" : "Red Wins"}</h2>
+            <button
+              className="w-full p-2 m-2 bg-gray-300 rounded"
+              onClick={() => {
+                setBoard(createEmptyBoard());
+                setCurrentPlayer("Red");
+                setIsGameOver(false);
+                setRedScore(0);
+                setYellowScore(0);
+                setRedTime(60);
+                setYellowTime(60);
+              }}
+            >
+              New Game
+            </button>
+          </div>
+        )}
         <div
           className="m-2"
           style={{ display: "grid", gridTemplateColumns: `repeat(${COLS}, 64px)` }}
@@ -232,8 +253,13 @@ const Board = () => {
           <button
             className="w-full p-2 m-2 bg-gray-300 rounded"
             onClick={() => {
+              if (isGameOver) return;
               setBoard(createEmptyBoard());
               setCurrentPlayer("Red");
+              setRedScore(0);
+              setYellowScore(0);
+              setRedTime(60);
+              setYellowTime(60);
             }}
           >
             Reset Game
