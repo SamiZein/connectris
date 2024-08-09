@@ -185,12 +185,12 @@ const Board = () => {
   };
 
   return (
-    <div className="w-auto h-auto bg-blue-500">
+    <div className="container bg-blue-500">
       <h1 className="p-2 text-2xl">Connectris</h1>
       <div className="flex">
-        <div className="h-fit w-fit">
+        <div>
           {isGameOver && (
-            <div className="absolute flex flex-col items-center bg-gray-500 rounded left-60 top-60">
+            <div className="absolute flex flex-col items-center bg-gray-500 rounded left-40 top-40">
               <h2>{redTime == 0 ? "Yellow Wins" : "Red Wins"}</h2>
               <button
                 className="p-2 m-2 bg-gray-300 rounded"
