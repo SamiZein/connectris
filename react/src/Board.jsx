@@ -185,7 +185,7 @@ const Board = () => {
   };
 
   return (
-    <div className="container bg-blue-500">
+    <div className="bg-blue-500">
       <h1 className="p-2 text-2xl">Connectris</h1>
       <div className="flex">
         <div>
